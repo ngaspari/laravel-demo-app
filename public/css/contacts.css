@@ -1,0 +1,50 @@
+body {
+    font-family: 'Calibri', 'Verdana', 'Tahome';
+}
+
+h1 {
+    font-size: 2em;
+}
+
+.main {
+    width: 95%;
+    margin: 10px auto;
+    padding: 1em;
+    font-size: 1.4em;
+    position: relative;
+    background-image: linear-gradient(#d9d9d9, #f2f2f2);
+    min-height: 600px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.details {
+    min-width: 400px;
+}
+
+.details th, td {
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+}
+
+.details tr:hover {background-color: #fff5e6;}
+
+.contact-detail {
+    width: 600px;
+}
+
+.form-group {
+    border-radius: 5px;
+    background-image: linear-gradient(#ffe0b3, #fff5e6);
+    padding: 20px;
+    margin-top: 5px;
+}
+
+.c-det-input {
+    float: right;
+}
+
+.btn-save {
+    font-size: 1.2em;
+    padding: 5px;
+}

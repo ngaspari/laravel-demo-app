@@ -1,0 +1,43 @@
+<?php
+namespace App\DbSeeder;
+
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Persistence\ObjectManager;
+use App\Entities\Contact;
+use Faker\Generator as FakerGen;
+
+class ContactsDataLoader implements FixtureInterface
+{
+    
+    private $faker;
+    private $nrOfContacts;
+    
+    public function __construct( FakerGen $faker, $nrOfContacts = 10 ) {
+        $this->faker = $faker;
+        $this->nrOfContacts = $nrOfContacts;
+    }
+    
+    public function load(ObjectManager $manager)
+    {
+        
+        $faker = $this->faker;
+        
+        for ($i=0; $i < $this->nrOfContacts; $i++) {
+            $contact = new Contact(
+                $faker->firstName(),
+                $faker->lastName(),
+                $faker->address(),
+                $faker->city(),
+                $faker->country,
+                $faker->email(),
+                $faker->phoneNumber()
+            );
+            
+            $manager->persist($contact);
+            $manager->flush();
+        }
+        
+    }
+
+    
+}
