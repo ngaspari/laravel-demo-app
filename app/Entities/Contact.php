@@ -59,6 +59,12 @@ class Contact
      */
     private $relativeContacts;
     
+    /**
+     * @ORM\OneToMany(targetEntity=ContactRelation::class, mappedBy="relative", fetch="EXTRA_LAZY", cascade={"all"})
+     * @var ArrayCollection|ContactRelation[]
+     */
+    private $relativeTo;
+    
     
     
     public function __construct($firstName, $lastName, $address, $city, $country, $email, $phoneNumber)
