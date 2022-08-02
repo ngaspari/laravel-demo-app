@@ -53,11 +53,14 @@ class Contact
     protected $phoneNumber;
     
     
-    
     /**
-     * @param $firstname
-     * @param $lastname
+     * @ORM\OneToMany(targetEntity=ContactRelation::class, mappedBy="contact", fetch="EXTRA_LAZY", cascade={"all"})
+     * @var ArrayCollection|ContactRelation[]
      */
+    private $relativeContacts;
+    
+    
+    
     public function __construct($firstName, $lastName, $address, $city, $country, $email, $phoneNumber)
     {
         $this->firstName = $firstName;
@@ -67,6 +70,8 @@ class Contact
         $this->country = $country;
         $this->email = $email;
         $this->phoneNumber = $phoneNumber;
+        
+        $this->relativeContacts = new ArrayCollection();
     }
     
     public function getId()
@@ -112,14 +117,15 @@ class Contact
     {
         return [
             'id' => $this->getId(),
-            'firstName' => $this->getFirstName(),
-            'lastName' => $this->getLastName(),
-            'address' => $this->getAddress(),
-            'city' => $this->getCity(),
-            'city' => $this->getCity(),
-            'country' => $this->getCountry(),
-            'email' => $this->getEmail(),
-            'phoneNumber' => $this->getPhoneNumber(),
+            'firstName'     => $this->getFirstName(),
+            'lastName'      => $this->getLastName(),
+            'address'       => $this->getAddress(),
+            'city'          => $this->getCity(),
+            'city'          => $this->getCity(),
+            'country'       => $this->getCountry(),
+            'email'         => $this->getEmail(),
+            'phoneNumber'   => $this->getPhoneNumber(),
+            'relativesList' => $this->getRelativesList(),
         ];
         
     }
@@ -179,5 +185,73 @@ class Contact
         return $this;
     }
     
+    /**
+     * 
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getRelatives() {
+        return $this->relativeContacts;
+    }
+    
+    /**
+     * 
+     * @return boolean
+     */
+    public function hasRelatives() {
+        return !$this->getRelatives()->isEmpty();
+    }
+    
+    /**
+     * 
+     * @param Contact $relative
+     * @return boolean
+     */
+    private function isAlreadyRelative(Contact $relative) {
+        if ($this->hasRelatives()) {
+            /** @var ContactRelation $existingRelative */
+            foreach ($this->getRelatives() as $existingRelative) {
+                if ($existingRelative->getRelative()->getId() == $relative->getId()) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;   // not a relative
+    }
+    
+    /**
+     * 
+     * @param Contact $relative
+     * @param string $relationType
+     */
+    public function addRelative(Contact $relative, string $relationType) {
+        if (!$this->isAlreadyRelative($relative)) {
+            $this->getRelatives()->add(
+                new ContactRelation($this, $relative, RelationType::fromDescription($relationType))
+            );
+        }
+    }
+    
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getRelativesList() {
+        $relativesArray = [];
+        if ($this->hasRelatives()) {
+            
+            /** @var ContactRelation $existingRelative */
+            foreach ($this->getRelatives() as $existingRelative) {
+                $relativesArray[ (string)$existingRelative->getRelationType() ][] = [
+                    'id'        => $existingRelative->getRelative()->getId(),
+                    'firstName' => $existingRelative->getRelative()->getFirstName(),
+                    'lastName'  => $existingRelative->getRelative()->getLastName(),
+                ];
+            }
+        }
+        
+        return $relativesArray;
+    }
     
 }

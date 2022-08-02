@@ -60,6 +60,21 @@
     </tr>
     
     <tr>
+        <td>Relatives</td>
+        <td>
+            @forelse($relativesList as $type => $relatives)
+                <b>{{ $type }}(s):</b><br/>
+                @foreach($relatives as $theRelative)
+                &nbsp; - <a href="{{ url('/contacts/details/' . $theRelative['id']) }}">{{ $theRelative['firstName']. ' ' . $theRelative['lastName'] }}</a><br/>                
+                @endforeach
+                <br/>
+            @empty
+                <em>N/A</em>
+            @endforelse
+         </td>
+    </tr>
+    
+    <tr>
         <td colspan='2' align='right'>
             <a href="{{ url()->current() }}?editForm=1"><img src='/images/edit_icon_32.png' title='Uredi' /></a>
             &nbsp;&nbsp;&nbsp;

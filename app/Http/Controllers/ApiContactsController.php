@@ -11,6 +11,13 @@ use App\Domain\Services\Contacts\DeleteContactService;
 
 class ApiContactsController extends BaseController
 {
+    
+    /**
+     * 
+     * @param Request $request
+     * @param ViewContactsPaginatedService $service
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function listContactsAction( Request $request, ViewContactsPaginatedService $service ) {
         
         $req = new ViewContactsPaginatedRequest(
@@ -27,6 +34,12 @@ class ApiContactsController extends BaseController
         return response()->json( $response );
     }
     
+    /**
+     * 
+     * @param Request $request
+     * @param DeleteContactService $deleteContactService
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deleteContactAction( Request $request, DeleteContactService $deleteContactService ) {
         
         $id = $request->get('id');
@@ -40,6 +53,13 @@ class ApiContactsController extends BaseController
         
     }
     
+    
+    /**
+     * 
+     * @param Request $request
+     * @param EditContactService $editContactService
+     * @return \Illuminate\Http\JsonResponse|unknown
+     */
     public function updateContactAction( Request $request, EditContactService $editContactService ) {
         
         try {
@@ -72,6 +92,13 @@ class ApiContactsController extends BaseController
         
     }
     
+    
+    /**
+     * 
+     * @param Request $request
+     * @param CreateContactService $createContactService
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function createContactAction( Request $request, CreateContactService $createContactService ) {
         
         $createContactService->execute(
