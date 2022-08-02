@@ -67,10 +67,10 @@ class Contact extends \App\Entities\Contact implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', 'id', 'firstName', 'lastName', 'address', 'city', 'country', 'email', 'phoneNumber', '' . "\0" . 'App\\Entities\\Contact' . "\0" . 'relativeContacts'];
+            return ['__isInitialized__', 'id', 'firstName', 'lastName', 'address', 'city', 'country', 'email', 'phoneNumber', '' . "\0" . 'App\\Entities\\Contact' . "\0" . 'relativeContacts', '' . "\0" . 'App\\Entities\\Contact' . "\0" . 'relativeTo'];
         }
 
-        return ['__isInitialized__', 'id', 'firstName', 'lastName', 'address', 'city', 'country', 'email', 'phoneNumber', '' . "\0" . 'App\\Entities\\Contact' . "\0" . 'relativeContacts'];
+        return ['__isInitialized__', 'id', 'firstName', 'lastName', 'address', 'city', 'country', 'email', 'phoneNumber', '' . "\0" . 'App\\Entities\\Contact' . "\0" . 'relativeContacts', '' . "\0" . 'App\\Entities\\Contact' . "\0" . 'relativeTo'];
     }
 
     /**

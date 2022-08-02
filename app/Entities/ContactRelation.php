@@ -19,10 +19,10 @@ class ContactRelation
     
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity=Contact::class)
+     * @ORM\ManyToOne(targetEntity=Contact::class, inversedBy="relativeTo")
      * @ORM\JoinColumn(name="relative_id", referencedColumnName="id")
      */
-    private $relative;    
+    private $relative;
     
     /**
      *  @ORM\Embedded(class="RelationType", columnPrefix = "rel_type_")
