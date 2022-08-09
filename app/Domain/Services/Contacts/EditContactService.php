@@ -23,6 +23,7 @@ class EditContactService
         $email, 
         $phoneNumber
     ) {
+        
         $contact = $this->repo->findById( $id );
         
         if ($contact == null) {

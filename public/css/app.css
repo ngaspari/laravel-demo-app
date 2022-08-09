@@ -1,22 +1,25 @@
 body {
-    font-family: 'Calibri', 'Verdana', 'Tahome';
+    font-family: 'Calibri', 'Verdana', 'Tahoma';
 }
 
 h1 {
     font-size: 2em;
+    margin-bottom: 0.5em;
 }
 
 .main {
-    width: 50%;
+    width: 95%;
     margin: 10px auto;
     padding: 1em;
     font-size: 1.4em;
     position: relative;
-    background-image: linear-gradient(#d9d9d9, #f2f2f2);
+    /*background-image: linear-gradient(#d9d9d9, #f2f2f2);*/
+    background-image: linear-gradient(#9fbfdf, #ecf2f9);
     min-height: 600px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
 
 .version {
     position: absolute;
@@ -24,4 +27,8 @@ h1 {
     right: 10px;
     font-family: tahoma;
     font-size: 0.7em;
+}
+
+ul {
+    list-style: none;
 }

@@ -8,6 +8,7 @@ use App\Domain\Services\Contacts\ViewContactsPaginatedRequest;
 use App\Domain\Services\Contacts\CreateContactService;
 use App\Domain\Services\Contacts\EditContactService;
 use App\Domain\Services\Contacts\DeleteContactService;
+use Illuminate\Support\Facades\View;
 
 class ApiContactsController extends BaseController
 {
@@ -53,12 +54,12 @@ class ApiContactsController extends BaseController
         
     }
     
-    
+       
     /**
      * 
      * @param Request $request
      * @param EditContactService $editContactService
-     * @return \Illuminate\Http\JsonResponse|unknown
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function updateContactAction( Request $request, EditContactService $editContactService ) {
         
@@ -77,13 +78,17 @@ class ApiContactsController extends BaseController
                 $request->has('phoneNumber') ? $request->get('phoneNumber', '') : null
             );
         } catch (\Exception $e) {
-            return response()->json( ['error' => $e->getMessage()] );
+            if ($request->has('from_form')) {
+                return View::make('error', ['msg' => $e->getMessage()]);
+            }
+            else {
+                return response()->json( ['error' => $e->getMessage()] );
+            }
         }
         
         if ($request->has('from_form')) {
             // if from form - redirect
             return redirect()->back();
-            //return redirect()->route('contacts.details', ['id' => $id]);
         }
         else {
             // from AJAX

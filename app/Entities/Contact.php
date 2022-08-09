@@ -185,6 +185,7 @@ class Contact
         $lastName !== null ? $this->setLastName($lastName) : null;
         $address !== null ? $this->setAddress($address) : null;
         $city !== null ? $this->setCity($city) : null;
+        $country !== null ? $this->setCountry($country) : null;
         $email !== null ? $this->setEmail($email) : null;
         $phoneNumber !== null ? $this->setPhoneNumber($phoneNumber) : null;
         

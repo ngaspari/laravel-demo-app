@@ -1,9 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    font-family: 'Calibri', 'Verdana', 'Tahome';
+    font-family: 'Calibri', 'Verdana', 'Tahoma';
+    padding: 5px;
 }
 
 h1 {
     font-size: 2em;
+    margin-bottom: 0.5em;
 }
 
 .main {
@@ -12,14 +19,17 @@ h1 {
     padding: 1em;
     font-size: 1.4em;
     position: relative;
-    background-image: linear-gradient(#d9d9d9, #f2f2f2);
+    /*background-image: linear-gradient(#d9d9d9, #f2f2f2);*/
+    background-image: linear-gradient(#9fbfdf, #ecf2f9);
     min-height: 600px;
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .details {
-    min-width: 400px;
+    min-width: 50%;
+    border: 1px solid black;
+    border-radius: 5px;
 }
 
 .details th, td {
@@ -27,17 +37,23 @@ h1 {
   padding: 5px;
 }
 
-.details tr:hover {background-color: #fff5e6;}
+.details tr:hover {background-color: #4080bf;}
 
 .contact-detail {
-    width: 600px;
+    width: 50%;
 }
 
 .form-group {
     border-radius: 5px;
-    background-image: linear-gradient(#ffe0b3, #fff5e6);
+    background-image: linear-gradient(#4080bf, #2d5986);
     padding: 20px;
     margin-top: 5px;
+}
+
+.form-group input{
+    font-size: 1em;
+    padding: 0.1em 0.1em;
+    width: 60%;
 }
 
 .c-det-input {
@@ -47,4 +63,8 @@ h1 {
 .btn-save {
     font-size: 1.2em;
     padding: 5px;
+}
+
+.home_link {
+    font-size: 0.7em;
 }

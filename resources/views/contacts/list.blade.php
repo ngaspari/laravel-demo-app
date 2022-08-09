@@ -12,6 +12,7 @@
         <link href="{{ asset('css/contacts.css') }}" media="screen" rel="stylesheet" type="text/css">
         
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css">
+        
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.13.2/css/ui.jqgrid.min.css">
        
@@ -22,7 +23,6 @@
         
         <script>
         $(document).ready(function() {
-        	$(".main").show(500);
 
         	var csrfHeader=$('meta[name="csrf-token"]').attr('content');
         	$.ajaxSetup({
@@ -57,8 +57,9 @@
 			  	   	},
         		],
         		pager: "#pager",
-        		autowidth: true,
-        		shrinkToFit: false,
+                width: $(".main").width(),
+        		//autowidth: true,
+        		//shrinkToFit: false,
         	   	rowNum: 20,
         	   	rowList: [5, 20, 50, 100],
         	   	viewrecords: true,
@@ -69,6 +70,11 @@
                     if ("error" in data ) {
                     	alert(data.error);
         			}
+        	    },
+        	    ondblClickRow: function(rowid)
+        	    {
+        	    	var rowData = jQuery(this).getRowData(rowid); 
+        	        showContactDetails(rowData['id']);
         	    },
         	    multiselect : false
         	}).navGrid("#pager",{add: true, edit:true, view:false, del:true, search: false},
@@ -98,6 +104,7 @@
         				},
         				closeAfterAdd:true,
         				closeAfterEdit:true,
+                        closeOnEscape:true,
         				reloadAfterSubmit:true
                     },
         			/** add **/
@@ -119,6 +126,7 @@
         				},
         				closeAfterAdd:true,
         				closeAfterEdit:true,
+        				closeOnEscape:true,
         				reloadAfterSubmit:true
                     },
         			/** delete **/
@@ -145,19 +153,11 @@
         					}
         					return [success, message];
         				},
+        				closeOnEscape:true,
         				reloadAfterSubmit:true
         			},
                     {sopt:['cn','nc','eq','ne'], multipleSearch : false})
-        	.filterToolbar({searchOperators: true, searchOnEnter: true, enableClear: false, defaultSearch : "cn", ignoreCase: true, stringResult: true })
-        	.navButtonAdd("#pager",{
-        		caption:"",
-        		   title: "Click",
-        		   buttonicon:"fa-file-excel-o",
-        		   onClickButton: function(){
-        			   alert('click!');
-        		   },
-        		   position:"last"
-        	});
+        	.filterToolbar({searchOperators: true, searchOnEnter: true, enableClear: false, defaultSearch : "cn", ignoreCase: true, stringResult: true });
         });
 
         function showContactDetails( id ) {
@@ -168,15 +168,16 @@
         
     </head>
     <body>
-        <div class="main" style='display: none;'>
+        <div class="main">
             <h1>List of contacts</h1>
             
             <div>
                 <table id="grid"></table>
                 <div id="pager"></div>
-            </div>            
+            </div>
+            
+            <br/>
+            <a href="{{ url('/') }}" class='home_link'>Home</a>            
         </div>
-        
-        <a href="{{ url('/') }}">Home</a> 
-    </body>
+	</body>
 </html>

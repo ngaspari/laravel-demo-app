@@ -12,7 +12,9 @@
     <body>
         <div class="main">
             <h1>Demo contacts app</h1>
-            <a href="{{ url('/contacts/list/') }}">List of contacts</a>            
+            <ul>
+                <li><a href="{{ url('/contacts/list/') }}">List of contacts</a></li>
+            </ul>            
 
             <div class="version">
                 Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
