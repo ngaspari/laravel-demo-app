@@ -32,3 +32,89 @@ h1 {
 ul {
     list-style: none;
 }
+
+.new_contact {
+    margin: 0 auto;
+    width: 50%;
+}
+
+.block {
+    display: block;
+}
+
+.input-xl{
+    font-size: 1em;
+    padding: 0.1em 0.1em;
+}
+
+.btn-xl{
+    font-size: 1em;
+    padding: 0.1em 0.1em;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.w-10 {
+    width: 10%;
+}
+.w-20 {
+    width: 20%;
+}
+.w-25 {
+    width: 25%;
+}
+.w-30 {
+    width: 30%;
+}
+.w-40 {
+    width: 40%;
+}
+.w-50 {
+    width: 50%;
+}
+.w-60 {
+    width: 60%;
+}
+.w-70 {
+    width: 70%;
+}
+.w-75 {
+    width: 75%;
+}
+.w-80 {
+    width: 80%;
+}
+.w-90 {
+    width: 90%;
+}
+.w-100 {
+    width: 100%;
+}
+.p-5 {
+    padding: 5px;
+}
+.p-10 {
+    padding: 10px;
+}
+.p-20 {
+    padding: 20px;
+}
+.pl-10 {
+    padding-left: 10px;
+}
+.table-striped{
+    border-spacing: 0px;
+    border-collapse: separate;
+}
+
+.table-striped tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.table-bordered td th {
+  margin: 0px;
+  padding: 0.1em;
+  border: 0.5px solid #000;
+}
