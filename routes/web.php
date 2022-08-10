@@ -25,6 +25,7 @@ Route::get('info/', function () {
 });
 
 
+/*
 Route::controller(ContactsController::class)->group(function () {
     Route::get('/contacts/details/{id}', 'contactDetailsAction')->name('contacts.details');
     Route::get('/contacts/delete/{id}', 'contactDeleteAction')->name('contacts.delete');
@@ -38,6 +39,6 @@ Route::controller(ApiContactsController::class)->group(function () {
     Route::put('/api/contacts', 'updateContactAction')->name('contacts.edit');
     Route::post('/api/contacts', 'createContactAction')->name('contacts.create');
 });
-
+*/
 
 Route::resource('/contacts', ContactController::class);

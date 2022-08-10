@@ -12,5 +12,11 @@ class Contact extends Model
     
     protected $primaryKey   = 'id';
     
+    protected $fillable     = ['firstName', 'lastName', 'address', 'city', 'country', 'email', 'phone'];
+    
+    
+    public function getDisplayName() {
+        return $this->firstName . ' ' . $this->lastName;
+    }
     
 }

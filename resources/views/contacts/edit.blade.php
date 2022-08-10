@@ -11,8 +11,11 @@
     <h1>{{ $pageTitle }}</h1>
          
     <div class='new_contact'>       
-        <form action='/contacts' method='POST'>
+        <form action='/contacts/{{ $contact->id }}' method='POST'>
             @csrf
+            
+            <!-- only GET|POST is possible via standard HTML form .... this is Laravels's way of "fixing" this  -->
+            @method("PUT")
         
             <input
                 class='block input-xl mb-10 w-50'
@@ -20,6 +23,7 @@
                 name='firstName'
                 placeholder='First name...'
                 tabindex = '0'
+                value = '{{ $contact?->firstName }}'
             />
             
             <input
@@ -27,6 +31,7 @@
                 type='text'
                 name='lastName'
                 placeholder='Last name...'
+                value = '{{ $contact?->lastName }}'
             />
             
             <input
@@ -34,6 +39,7 @@
                 type='text'
                 name='address'
                 placeholder='Address...'
+                value = '{{ $contact?->address }}'
             />
             
             <input
@@ -41,6 +47,7 @@
                 type='text'
                 name='city'
                 placeholder='City...'
+                value = '{{ $contact?->city }}'
             />
             
             <input
@@ -48,6 +55,7 @@
                 type='text'
                 name='country'
                 placeholder='Country...'
+                value = '{{ $contact?->country }}'
             />
             
             <input
@@ -55,6 +63,7 @@
                 type='text'
                 name='email'
                 placeholder='Email...'
+                value = '{{ $contact?->email }}'
             />
             
             <input
@@ -62,6 +71,7 @@
                 type='tel'
                 name='phone'
                 placeholder='Phone'
+                value = '{{ $contact?->phone }}'
             />
             
             <button type='submit' class='block btn-xl mb-10 w-50'>

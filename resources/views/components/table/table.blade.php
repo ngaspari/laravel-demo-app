@@ -4,8 +4,8 @@
         @if($headers)
         <thead>
             <tr>
-            @foreach($headers as $headTxt)
-                <th>{{ $headTxt }}</th>
+            @foreach($headers as $header)
+                <th class='{{ $header['class'] }}'>{{ $header['name'] }}</th>
             @endforeach
             </tr>
         </thead>

@@ -16,9 +16,18 @@ class Table extends Component
      */
     public function __construct( array $headers = [], array $footers = [], string $class = '' )
     {
-        $this->headers = $headers;
+        $this->headers = $this->formatHeaders($headers);
         $this->footers = $footers;
         $this->class = $class;
+    }
+    
+    private function formatHeaders(array $headers) : array{
+        return array_map(function( $header ) {
+            $name = is_array($header) ? $header['name'] : $header;
+            $class = is_array($header) ? $header['class'] : '';
+            
+            return ['name' => $name, 'class' => $class];
+        }, $headers);
     }
 
     /**
