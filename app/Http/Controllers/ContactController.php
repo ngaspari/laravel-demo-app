@@ -73,7 +73,6 @@ class ContactController extends Controller
             ['name' => 'Delete', 'class' => 'text-center'],
         ];
         
-        //return view('contacts.index', ['contacts' => $contacts, 'headers' => $headers]);
         return view('contacts.index', compact('contacts', 'headers', 'sortf', 'sord', 'searchParam'));
     }
 
