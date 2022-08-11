@@ -9,7 +9,9 @@
 
         <title>{{ $pageTitle ?? 'Laravel app' }}</title>
         
-        <link href="{{ asset('css/app.css') }}" media="screen" rel="stylesheet" type="text/css">
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <link href="{{ asset('css/contacts.css') }}" media="screen" rel="stylesheet" type="text/css">
         
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css">
         
