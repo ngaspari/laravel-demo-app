@@ -23,10 +23,12 @@ class Table extends Component
     
     private function formatHeaders(array $headers) : array{
         return array_map(function( $header ) {
-            $name = is_array($header) ? $header['name'] : $header;
-            $class = is_array($header) ? $header['class'] : '';
+            $name = is_array($header) ? ($header['name'] ?? null) : $header;
+            $class = is_array($header) ? ($header['class'] ?? null) : '';
+            $link = is_array($header) ? ($header['link'] ?? null) : '';
+            $sord = is_array($header) ? ($header['sord'] ?? null) : null;
             
-            return ['name' => $name, 'class' => $class];
+            return ['name' => $name, 'class' => $class, 'link' => $link, 'sord' => $sord];
         }, $headers);
     }
 

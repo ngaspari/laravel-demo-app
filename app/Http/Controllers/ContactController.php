@@ -7,32 +7,54 @@ use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
+    
+    private function getLinkForContactsSorting($field, $currentSortf, $currentSord) {
+        $sord = 'asc';
+        if ($field == $currentSortf) {
+            // the same collumn/field
+            $sord = ($currentSord == 'asc') ? 'desc' : 'asc';
+        }
+        
+        return route('contacts.index', ['sortf' => $field, 'sord' => $sord]);
+    }
+    
+    private function getSordForTheCollumn($field, $currentSortf, $currentSord) {
+        $sord = '';
+        if ($field == $currentSortf) {
+            // the same collumn/field
+            $sord = ($currentSord == 'asc') ? 'desc' : 'asc';
+        }
+        
+        return $sord;
+    }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( Request $request )
     {
-        // $contacts = Contact::all()->paginate(2);
-        // $contacts = DB::table('new_contacts')->paginate(2);
         
-        $contacts = Contact::orderBy('id', 'asc')->paginate(25);
+        // get query parameters
+        $sortBy = $request->query('sortf', 'id');
+        $sortOrder = $request->query('sord', 'asc');
         
-        //dd($contacts);
-                
+        $contacts = Contact::orderBy($sortBy, $sortOrder)->paginate(25);
+        
         $headers = [
-            ['name' => '#', 'class' => 'text-left'],
-            ['name' => 'First name', 'class' => 'text-left'],
-            ['name' => 'Last name', 'class' => 'text-left'],
-            ['name' => 'Address', 'class' => 'text-left'],
-            ['name' => 'City', 'class' => 'text-left'],
-            ['name' => 'Phone', 'class' => 'text-right'],
+            ['name' => '#', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('id', $sortBy, $sortOrder), 'sord' => $this->getSordForTheCollumn('id', $sortBy, $sortOrder) ],
+            ['name' => 'First name', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('firstName', $sortBy, $sortOrder), 'sord' => $this->getSordForTheCollumn('firstName', $sortBy, $sortOrder)],
+            ['name' => 'Last name', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('lastName', $sortBy, $sortOrder), 'sord' => $this->getSordForTheCollumn('lastName', $sortBy, $sortOrder)],
+            ['name' => 'Address', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('address', $sortBy, $sortOrder), 'sord' => $this->getSordForTheCollumn('address', $sortBy, $sortOrder)],
+            ['name' => 'City', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('city', $sortBy, $sortOrder), 'sord' => $this->getSordForTheCollumn('city', $sortBy, $sortOrder)],
+            ['name' => 'Phone', 'class' => 'text-right', 'link' => $this->getLinkForContactsSorting('phone', $sortBy, $sortOrder), 'sord' => $this->getSordForTheCollumn('phone', $sortBy, $sortOrder)],
             ['name' => 'Edit', 'class' => 'text-center'],
             ['name' => 'Delete', 'class' => 'text-center'],
         ];
         
-        return view('contacts.index', ['contacts' => $contacts, 'headers' => $headers]);
+        //return view('contacts.index', ['contacts' => $contacts, 'headers' => $headers]);
+        return view('contacts.index', compact('contacts', 'headers'));
     }
 
     /**
