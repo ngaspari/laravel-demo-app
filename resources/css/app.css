@@ -17,6 +17,7 @@
         h-12 my-2 mx-auto shadow-lg
         px-4
         bg-gray-800 text-green-600
+        dark:bg-slate-100
         hover:bg-green-800 hover:text-white
         rounded-lg hover:rounded-xl
         transition-all duration-300 ease-linear;
