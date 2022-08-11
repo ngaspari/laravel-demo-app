@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class='m-auto w-100'>
+    <div class='m-auto w-100 pb-8'>
         
         <div class='text-center'>
             <h1 class='text-5xl uppercase bold'>Contacts list</h1>
@@ -14,7 +14,7 @@
                 <input type='hidden' name='sord' value="{{ request()->get('sord') }}" />
                 <!-- <input type='hidden' name='page' value="{{ request()->get('page') }}" />  -->
                 
-                <input type="text" name="q" placeholder="Search" class="py-2 px-2 text-sm border border-gray-200 rounded-l focus:outline-none" value="{{ $searchParam }}" />
+                <input type="text" name="q" placeholder="{{ __('Search') }}" class="py-2 px-2 text-sm border border-gray-200 rounded-l focus:outline-none" value="{{ $searchParam }}" />
             
                 <button type="submit" class="w-10 flex items-center justify-center border-t border-r border-b border-gray-200 rounded-r text-gray-100 bg-blue-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -23,13 +23,7 @@
                 </button>
         </div>
         </form>
-        
-        <!-- 
-        <div class='py-5'>
-            <a href='/contacts/create'>Add a new contact &rarr;</a>
-        </div>
-         -->
-        
+
         <!-- use Table/Table component -->
         <x-table.table 
             :headers="$headers"
@@ -64,5 +58,17 @@
             {{ $contacts->appends( request()->except('page') )->links() }}
         </div>
         
+        <div class='text-green-700 absolute bottom-0 left-0 pl-4'>
+            <div class='footer-btn group'>
+                <a href='{{ route('index') }}'>&larr; {{ __('Home') }}</a>
+                <span class='footer-btn-tooltip group-hover:scale-100'>{{ __('Go to the start page') }}</span>
+             </div>
+            
+             <div class='footer-btn group'>
+                <a href='{{ route('contacts.create') }}'>{{ __('New contact') }} &rarr;</a>
+                <span class='footer-btn-tooltip group-hover:scale-100'>{{ __('Create a new contact') }}</span>
+            </div>
+        </div>
+
     </div>   
 @endsection

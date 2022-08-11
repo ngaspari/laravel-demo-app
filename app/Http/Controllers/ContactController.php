@@ -60,7 +60,7 @@ class ContactController extends Controller
             });
         }
         
-        $contacts = $contactsQuery->paginate(25);        
+        $contacts = $contactsQuery->paginate(15);        
         
         $headers = [
             ['name' => '#', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('id', $sortf, $sord, $page, $searchParam), 'sord' => $this->getSordForTheCollumn('id', $sortf, $sord) ],

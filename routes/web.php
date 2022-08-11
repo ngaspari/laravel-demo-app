@@ -18,11 +18,11 @@ use App\Http\Controllers\ContactController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('index');
 
 Route::get('info/', function () {
     return view('info');
-});
+})->name('phpinfo');
 
 
 /*

@@ -7,13 +7,13 @@
 
         <title>Demo contacts app</title>
         
-        <link href="{{ asset('css/app.css') }}" media="screen" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/contacts.css') }}" media="screen" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div class="main">
             <h1>Demo contacts app</h1>
             <ul>
-                <li><a href="{{ url('/contacts/list/') }}">List of contacts</a></li>
+                <li><a href="{{ route('contacts.index') }}">{{ __('List of contacts') }}</a></li>
             </ul>            
 
             <div class="version">
