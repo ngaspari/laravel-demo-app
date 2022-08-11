@@ -6,7 +6,7 @@
             <tr>
             @foreach($headers as $header)
                 <th class='{{ $header['class'] }}'>
-                    <div class='flex space-x-4'>
+                    <div class='inline-flex space-x-4 w-full {{ $header['class'] }}'>
                         @if($header['link'])        
                             <a href='{{ $header['link'] }}'>{{ $header['name'] }}</a>
                         @else
