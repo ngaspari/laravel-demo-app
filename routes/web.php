@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactsController;
 use App\Http\Controllers\ApiContactsController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +43,5 @@ Route::controller(ApiContactsController::class)->group(function () {
 */
 
 Route::resource('/contacts', ContactController::class);
+
+Route::get('/country/ajax-ac-search', [CountryController::class, 'selectSearch'])->name('country.ajax-ac-search');

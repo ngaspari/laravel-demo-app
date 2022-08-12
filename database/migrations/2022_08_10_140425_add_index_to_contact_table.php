@@ -17,7 +17,6 @@ return new class extends Migration
             $table->index('firstName');
             $table->index('lastName');
             $table->index('address');
-            $table->index('country');
             $table->index('email');
         });
     }

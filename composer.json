@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "asantibanez/livewire-select": "^2.1",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/support": "^9.22",
         "laravel-doctrine/orm": "^1.8",

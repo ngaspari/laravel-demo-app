@@ -23,9 +23,6 @@ return new class extends Migration
             
             $table->foreign('country_id')
                 ->references('id')->on('countries');
-
-            //$table->dropColumn('country');
-
         });
         
     }
@@ -39,8 +36,6 @@ return new class extends Migration
     {
         Schema::table('contacts', function (Blueprint $table) {
             $table->dropForeign('country_id');
-
-            $table->string('country', 100)->nullable(true);
         });
 
     }

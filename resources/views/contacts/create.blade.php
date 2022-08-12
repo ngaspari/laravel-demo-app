@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+@section('head')
+@endsection
+
 @section('content')
 
     <script>
@@ -20,6 +23,7 @@
                 name='firstName'
                 placeholder='First name...'
                 tabindex = '0'
+                value="{{ old('firstName') }}"
             />
             
             <input
@@ -27,6 +31,7 @@
                 type='text'
                 name='lastName'
                 placeholder='Last name...'
+                value="{{ old('lastName') }}"
             />
             
             <input
@@ -34,6 +39,7 @@
                 type='text'
                 name='address'
                 placeholder='Address...'
+                value="{{ old('address') }}"
             />
             
             <input
@@ -41,20 +47,30 @@
                 type='text'
                 name='city'
                 placeholder='City...'
+                value="{{ old('city') }}"
             />
             
+
             <input
-                class="mb-10 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                class="mb-1 italic appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 type='text'
-                name='country'
+                id='country_search'
                 placeholder='Country...'
+                autocomplete="off"
             />
+
+            <select
+                class="mb-10 block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                name='country'
+                id='country_select'
+            ></select>
             
             <input
-                class="mb-10 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                class="mt-10 mb-10 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 type='text'
                 name='email'
                 placeholder='Email...'
+                value="{{ old('email') }}"
             />
             
             <input
@@ -62,6 +78,7 @@
                 type='tel'
                 name='phone'
                 placeholder='Phone'
+                value="{{ old('phone') }}"
             />
             
             <button type='submit' class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded">
@@ -92,5 +109,39 @@
             <span class='footer-btn-tooltip group-hover:scale-100'>{{ __('Back to contacts') }}</span>
         </div>
     </div>
+
+
+    <script type="text/javascript">
+
+        $("#country_search").bindWithDelay("keypress", function() {
+            $value = $(this).val();
+            
+            $('#country_select').empty();
+            $.ajax({
+                type : 'get',
+                url: "{{ route('country.ajax-ac-search') }}",
+                data:{'q':$value},
+                success:function(data){
+                    $.each(data, function (i, item) {
+                        $('#country_select').append($('<option>', { 
+                            value: item.id,
+                            text : item.name
+                        }));
+                    });
+                }
+            });
+        }, 1000);
+
+        $('#country_select').on('click', function () {
+        	if ($(this).val()) {
+            	$("#country_search").val( $( "option:selected", this ).text() );
+            }
+        });
+
+        $(document).on('focus', 'input', function () {
+        	$(this).select();
+        });
+
+    </script>
     
 @endsection

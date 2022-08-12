@@ -12,7 +12,7 @@ class Contact extends Model
     
     protected $primaryKey   = 'id';
     
-    protected $fillable     = ['firstName', 'lastName', 'address', 'city', 'country', 'email', 'phone'];
+    protected $fillable     = ['firstName', 'lastName', 'address', 'city', 'email', 'phone'];
     
     
     public function getDisplayName() {

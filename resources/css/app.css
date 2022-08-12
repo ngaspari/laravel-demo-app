@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer components {
     .sidebar-icon {
         @apply inline-flex items-center justify-center
@@ -31,3 +32,4 @@
         transition-all duration-100 scale-0 origin-left;
     }
 }
+

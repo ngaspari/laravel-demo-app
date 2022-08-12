@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact;
+use App\Models\Country;
 use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
@@ -52,11 +53,6 @@ class ContactController extends Controller
         $contactsQuery = Contact::leftJoin('countries', 'contacts.country_id', '=', 'countries.id')->orderBy($sortf, $sord)
         ->select('contacts.id', 'contacts.firstName', 'contacts.lastName', 'contacts.address', 'contacts.city', 'contacts.phone', 'contacts.country_id', 'countries.name AS country_name');
         
-        /*
-        $contactsQuery = Contact::with(['country' => function($query) {
-            $query->select([DB::raw('name AS country_name')]);
-        }]);
-        */
         
         if ($searchParam) {
             $contactsQuery = $contactsQuery->where( function($query) use ($searchParam) {
@@ -106,27 +102,25 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         
-        /*
-        $contact = new Contact();
-        $contact->firstName = $request->input('firstName');
-        $contact->lastName = $request->input('lastName');
-        $contact->address = $request->input('address');
-        $contact->city = $request->input('city');
-        $contact->country = $request->input('country');
-        $contact->email = $request->input('email');
-        $contact->phone = $request->input('phone');
-        $contact->save();
-        */
-        
-        Contact::create( [
+        $country = Country::where('id', $request->input('country'))->first();
+
+        if (empty($request->input('firstName'))){ return back()->withErrors('Enter first name')->withInput(); };
+        if (empty($request->input('lastName'))){ return back()->withErrors('Enter last name')->withInput(); };
+        if (empty($request->input('address'))){ return back()->withErrors('Enter address')->withInput(); };
+        if (empty($request->input('city'))){ return back()->withErrors('Enter city')->withInput(); };
+
+        $contact = Contact::create( [
             'firstName' => $request->input('firstName'),
             'lastName' => $request->input('lastName'),
             'address' => $request->input('address'),
             'city' => $request->input('city'),
-            'country' => $request->input('country'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
         ]);
+
+        if ($country) {
+            $country->contacts()->save( $contact );
+        }        
         
         return redirect('/contacts');
     }
@@ -164,16 +158,21 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         $contact = Contact::findOrFail( $id );
+                
+        $country = Country::where('id', $request->input('country'))->first();
         
         $contact->update( [
             'firstName' => $request->input('firstName'),
             'lastName' => $request->input('lastName'),
             'address' => $request->input('address'),
             'city' => $request->input('city'),
-            'country' => $request->input('country'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
         ]);
+        
+        if ($country) {
+            $country->contacts()->save( $contact );
+        }
         
         return redirect('/contacts');
     }

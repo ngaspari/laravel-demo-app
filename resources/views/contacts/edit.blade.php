@@ -51,12 +51,24 @@
             />
             
             <input
-                class="mb-10 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                class="mb-1 italic appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 type='text'
-                name='country'
+                id='country_search'
                 placeholder='Country...'
-                value = '{{ $contact?->country }}'
+                autocomplete="off"
+                value = '{{ $contact?->country?->name }}'
             />
+
+            <select
+                class="mb-10 block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                name='country'
+                id='country_select'
+            >
+                @isset($contact?->country)
+                <option value='{{ $contact?->country?->id }}'>{{ $contact?->country?->name }}</option>
+                @endisset
+                
+            </select>
             
             <input
                 class="mb-10 appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -102,5 +114,40 @@
             <span class='footer-btn-tooltip group-hover:scale-100'>{{ __('Back to contacts') }}</span>
         </div>
     </div>
+    
+    
+    <script type="text/javascript">
+
+        $("#country_search").bindWithDelay("keypress", function() {
+            $value = $(this).val();
+            
+            $('#country_select').empty();
+            $.ajax({
+                type : 'get',
+                url: "{{ route('country.ajax-ac-search') }}",
+                data:{'q':$value},
+                success:function(data){
+                    $.each(data, function (i, item) {
+                        $('#country_select').append($('<option>', { 
+                            value: item.id,
+                            text : item.name
+                        }));
+                    });
+                }
+            });
+        }, 1000);
+
+
+        $('#country_select').on('click', function () {
+        	if ($(this).val()) {
+            	$("#country_search").val( $( "option:selected", this ).text() );
+            }
+        });
+
+        $(document).on('focus', 'input', function () {
+        	$(this).select();
+        });
+
+    </script>
     
 @endsection
