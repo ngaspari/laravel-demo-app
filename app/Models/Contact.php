@@ -8,7 +8,7 @@ class Contact extends Model
 {
     use HasFactory;
     
-    protected $table        = 'new_contacts';
+    protected $table        = 'contacts';
     
     protected $primaryKey   = 'id';
     
@@ -17,6 +17,15 @@ class Contact extends Model
     
     public function getDisplayName() {
         return $this->firstName . ' ' . $this->lastName;
+    }
+    
+    
+    public function country()
+    {
+        return $this->belongsTo(Country::class)->withDefault([
+            'id'    => null,
+            'name'  => null,
+        ]);;
     }
     
 }

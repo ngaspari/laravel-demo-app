@@ -37,17 +37,26 @@ class ContactController extends Controller
     {
         
         // get query parameters
-        $sortf = $request->query('sortf', 'id');
+        $sortf = $request->query('sortf', 'contacts.id');
         $sord = $request->query('sord', 'asc');
         
         // default
-        $sortf = $sortf ? $sortf : 'id';
+        $sortf = $sortf ? $sortf : 'contacts.id';
         $sord = $sord ? $sord : 'asc';
         
         $searchParam = $request->query('q', '');
         $page = $request->query('page', 1);
         
-        $contactsQuery = Contact::orderBy($sortf, $sord);
+        // $contactsQuery = Contact::orderBy($sortf, $sord);
+        
+        $contactsQuery = Contact::leftJoin('countries', 'contacts.country_id', '=', 'countries.id')->orderBy($sortf, $sord)
+        ->select('contacts.id', 'contacts.firstName', 'contacts.lastName', 'contacts.address', 'contacts.city', 'contacts.phone', 'contacts.country_id', 'countries.name AS country_name');
+        
+        /*
+        $contactsQuery = Contact::with(['country' => function($query) {
+            $query->select([DB::raw('name AS country_name')]);
+        }]);
+        */
         
         if ($searchParam) {
             $contactsQuery = $contactsQuery->where( function($query) use ($searchParam) {
@@ -56,11 +65,12 @@ class ContactController extends Controller
                     ->orWhere('lastName', 'like', "%$searchParam%")
                     ->orWhere('address', 'like', "%$searchParam%")
                     ->orWhere('city', 'like', "%$searchParam%")
+                    ->orWhere('countries.name', 'like', "%$searchParam%")
                     ->orWhere('phone', 'like', "%$searchParam%");
             });
         }
         
-        $contacts = $contactsQuery->paginate(15);        
+        $contacts = $contactsQuery->paginate(15);
         
         $headers = [
             ['name' => '#', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('id', $sortf, $sord, $page, $searchParam), 'sord' => $this->getSordForTheCollumn('id', $sortf, $sord) ],
@@ -68,6 +78,7 @@ class ContactController extends Controller
             ['name' => 'Last name', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('lastName', $sortf, $sord, $page, $searchParam), 'sord' => $this->getSordForTheCollumn('lastName', $sortf, $sord)],
             ['name' => 'Address', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('address', $sortf, $sord, $page, $searchParam), 'sord' => $this->getSordForTheCollumn('address', $sortf, $sord)],
             ['name' => 'City', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('city', $sortf, $sord, $page, $searchParam), 'sord' => $this->getSordForTheCollumn('city', $sortf, $sord)],
+            ['name' => 'Country', 'class' => 'text-left', 'link' => $this->getLinkForContactsSorting('countries.name', $sortf, $sord, $page, $searchParam), 'sord' => $this->getSordForTheCollumn('countries.name', $sortf, $sord)],
             ['name' => 'Phone', 'class' => 'text-right', 'link' => $this->getLinkForContactsSorting('phone', $sortf, $sord, $page, $searchParam), 'sord' => $this->getSordForTheCollumn('phone', $sortf, $sord)],
             ['name' => 'Edit', 'class' => 'text-center'],
             ['name' => 'Delete', 'class' => 'text-center'],

@@ -20,7 +20,7 @@ class ContactFactory extends Factory
             'lastName' => fake()->lastName(),
             'address' => fake()->address(),
             'city'  => fake()->city(),
-            'country'  => fake()->country(),
+            'country_id'  => null,
             'phone'  => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
         ];

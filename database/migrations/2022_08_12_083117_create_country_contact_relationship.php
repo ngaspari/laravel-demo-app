@@ -3,9 +3,13 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
+
+    public $withinTransaction = true;
+
     /**
      * Run the migrations.
      *
@@ -13,13 +17,17 @@ return new class extends Migration
      */
     public function up()
     {
+
         Schema::table('contacts', function (Blueprint $table) {
-            $table->index('firstName');
-            $table->index('lastName');
-            $table->index('address');
-            $table->index('country');
-            $table->index('email');
+            $table->bigInteger('country_id', false, true)->nullable(true);
+            
+            $table->foreign('country_id')
+                ->references('id')->on('countries');
+
+            //$table->dropColumn('country');
+
         });
+        
     }
 
     /**
@@ -30,7 +38,10 @@ return new class extends Migration
     public function down()
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->dropIndex(['firstName', 'lastName', 'address', 'country', 'email']);
+            $table->dropForeign('country_id');
+
+            $table->string('country', 100)->nullable(true);
         });
+
     }
 };

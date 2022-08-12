@@ -14,5 +14,12 @@ class Country extends Model
     public $timestamps  = false;
 
     protected $fillable = ['name', 'code'];
+    
+    
+    
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class);
+    }
 
 }
